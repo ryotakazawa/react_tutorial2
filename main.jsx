@@ -1,5 +1,7 @@
 function App() {
-  const tweets = [
+  // useStateでツイート配列を取得する
+  // 初期値は今まで通り
+  const [tweets, setTweets] = React.useState([
     {
       id: 0,
       icon: '🌽',
@@ -14,10 +16,15 @@ function App() {
       accountName: 'evidence',
       content: 'かにみそたべたい'
     }
-  ];
+  ]);
+
+  // addTweet関数はuseCallbackで作成する
+  // これも毎回作成していると重くなるので
+  const addTweet = React.useCallback((tweet) => setTweets((prev) => [tweet, ...prev]), [setTweets]);
 
   return (
     <div>
+      <TweetInput addTweet={addTweet}/>
       <Timeline tweets={tweets}/>
     </div>
   );
